@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>icon</key>
+		<string>remote</string>
+		<key>title</key>
+		<string>built-in remote</string>
+		<key>description</key>
+		<string>lorem ipsum</string>
+		<key>image</key>
+		<string>example.png</string>
+		<key>position</key>
+		<dict>
+			<key>x</key>
+			<integer>267</integer>
+			<key>y</key>
+			<integer>586</integer>
+		</dict>
+	</dict>
+	<dict>
+		<key>icon</key>
+		<string>battery</string>
+		<key>title</key>
+		<string>battery life</string>
+		<key>description</key>
+		<string>lorem ipsum</string>
+		<key>image</key>
+		<string>example.png</string>
+		<key>position</key>
+		<dict>
+			<key>x</key>
+			<integer>185</integer>
+			<key>y</key>
+			<integer>389</integer>
+		</dict>
+	</dict>
+	<dict>
+		<key>icon</key>
+		<string>microphone</string>
+		<key>title</key>
+		<string>built-in microphone</string>
+		<key>description</key>
+		<string>lorem ipsum</string>
+		<key>image</key>
+		<string>example.png</string>
+		<key>position</key>
+		<dict>
+			<key>x</key>
+			<integer>267</integer>
+			<key>y</key>
+			<integer>192</integer>
+		</dict>
+	</dict>
+	<dict>
+		<key>icon</key>
+		<string>comfort</string>
+		<key>title</key>
+		<string>extra comfort</string>
+		<key>description</key>
+		<string>lorem ipsum</string>
+		<key>image</key>
+		<string>example.png</string>
+		<key>position</key>
+		<dict>
+			<key>x</key>
+			<integer>761</integer>
+			<key>y</key>
+			<integer>586</integer>
+		</dict>
+	</dict>
+	<dict>
+		<key>icon</key>
+		<string>noise</string>
+		<key>title</key>
+		<string>noise cancellation</string>
+		<key>description</key>
+		<string>lorem ipsum</string>
+		<key>image</key>
+		<string>example.png</string>
+		<key>position</key>
+		<dict>
+			<key>x</key>
+			<integer>842</integer>
+			<key>y</key>
+			<integer>389</integer>
+		</dict>
+	</dict>
+	<dict>
+		<key>icon</key>
+		<string>money</string>
+		<key>title</key>
+		<string>30-day money back</string>
+		<key>description</key>
+		<string>lorem ipsum</string>
+		<key>image</key>
+		<string>example.png</string>
+		<key>position</key>
+		<dict>
+			<key>x</key>
+			<integer>761</integer>
+			<key>y</key>
+			<integer>192</integer>
+		</dict>
+	</dict>
+</array>
+</plist>
