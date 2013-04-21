@@ -22,6 +22,7 @@ static AppModel *instance;
     if(self = [super init]){
         _isOverCenter = NO;
         _screenState = @"home";
+        self.canTouchFeatures = YES;
     }
     return self;
 }
@@ -43,7 +44,7 @@ static AppModel *instance;
 
 -(void)setIsOverCenter:(BOOL)isOverCenter{
     if(isOverCenter != _isOverCenter){
-        if(!isOverCenter) [[SimpleAudioEngine sharedEngine] playEffect:@"click_1.caf" pitch:1.0f pan:0 gain:0.3f];
+        if(isOverCenter) [[SimpleAudioEngine sharedEngine] playEffect:@"click_1.caf" pitch:1.0f pan:0 gain:0.3f];
         _isOverCenter = isOverCenter;
         [[NSNotificationCenter defaultCenter] postNotificationName:kTOGGLE_CENTER_SIZE object:self];
     }

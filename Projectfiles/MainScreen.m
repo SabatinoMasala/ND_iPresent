@@ -51,7 +51,7 @@
         
         // Create the reseller overlay
         self.locateResellerOverlay = [[LocateResellerOverlay alloc] init];
-        self.locateResellerOverlay.position = ccp(0, 767);
+        self.locateResellerOverlay.position = ccp(0, 768);
         [self addChild:self.locateResellerOverlay];
         
         // Initializing audio engine
@@ -82,16 +82,50 @@
 -(void)screenChanged:(id)sender{
     // Are we on the detail state or did we get back to the home state from the detail state?
     if( [self.model.screenState isEqualToString:@"detail"] || ([self.model.screenState isEqualToString:@"home"] && [self.model.prevScreenState isEqualToString:@"detail"]) ){
-        float opacity = 0.0f;
         if([self.model.screenState isEqualToString:@"detail"]){
-            opacity = 0.6f * 255;
+            [self showOverlay:YES];
         }
-        CCFadeTo *fade = [CCFadeTo actionWithDuration:0.2f opacity:opacity];
-        CCSequence *seq = [CCSequence actions:fade, nil];
-        [self.overlay runAction:seq];
+        else{
+            [self showOverlay:NO];
+        }
         self.center.zOrder = [self.children count] + 1;
         self.overlay.zOrder = [self.children count];
     }
+    
+    // Are we on the locator state?
+    if( [self.model.screenState isEqualToString:@"locator"] ){
+        [self showOverlay:YES];
+        self.center.zOrder = [self.children count];
+        self.overlay.zOrder = [self.children count];
+        self.locateResellerOverlay.zOrder = [self.children count];
+        [self.locateResellerOverlay stopAllActions];
+        CCMoveTo *moveTo = [CCMoveTo actionWithDuration:1.0f position:ccp(0, 398)];
+        CCEaseExponentialOut *easeMove = [CCEaseExponentialOut actionWithAction:moveTo];
+        self.locateResellerOverlay.layer.visible = YES;
+        [self.locateResellerOverlay runAction:easeMove];
+    }
+    
+    // Did we return to the home state from the locator state?
+    if([self.model.screenState isEqualToString:@"home"] && [self.model.prevScreenState isEqualToString:@"locator"]){
+        [self showOverlay:NO];
+        [self.locateResellerOverlay stopAllActions];
+        CCMoveTo *moveTo = [CCMoveTo actionWithDuration:1.0f position:ccp(0, 726)];
+        CCEaseExponentialOut *easeMove = [CCEaseExponentialOut actionWithAction:moveTo];
+        CCCallBlock *block = [CCCallBlock actionWithBlock:^{
+            self.locateResellerOverlay.layer.visible = NO;
+        }];
+        CCSequence *seq = [CCSequence actions:easeMove, block, nil];
+        [self.locateResellerOverlay runAction:seq];
+    }
+}
+
+-(void)showOverlay:(BOOL)visible {
+    float opacity = 0.0f;
+    if(visible){
+        opacity = 0.6f * 255;
+    }
+    CCFadeTo *fade = [CCFadeTo actionWithDuration:0.2f opacity:opacity];
+    [self.overlay runAction:fade];
 }
 
 // Are we hovering over the center or not?
@@ -153,7 +187,7 @@
     [self.centerLabel runAction:seq];
     
     // The button at the top slides in
-    CCMoveTo *moveTo = [CCMoveTo actionWithDuration:1.2f position:ccp(0, 725)];
+    CCMoveTo *moveTo = [CCMoveTo actionWithDuration:1.2f position:ccp(0, 726)];
     CCDelayTime *delay2 = [CCDelayTime actionWithDuration:1.5f];
     CCEaseExponentialOut *easeMoveTo = [CCEaseExponentialOut actionWithAction:moveTo];
     CCSequence *seq2 = [CCSequence actions:delay2, easeMoveTo, nil];
@@ -243,6 +277,8 @@
     
     // Are we currently on the homepage?
     if([self.model.screenState isEqualToString:@"home"]){
+        
+        if(!self.model.canTouchFeatures) return;
         
         // Let's loop over every feature object to see if we're touching one
         CGPoint circleCenter;

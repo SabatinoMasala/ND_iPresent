@@ -5,6 +5,9 @@
 
 -(id)init{
     if(self = [super init]){
+        
+        self.model = [AppModel sharedModel];
+        
         float w = [CCDirector sharedDirector].screenSize.width;
         self.layer = [CCLayerColor layerWithColor:ccc4(114, 115, 115, 255) width:w height:369];
         self.layer.position = ccp(0, 42);
@@ -25,19 +28,22 @@
     return self;
 }
 
--(void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+-(void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     UITouch *touch = [touches anyObject];
     
-    /*if(![[AppModel sharedModel] centerOpen]){
-    
+    if([self.model.screenState isEqualToString:@"home"]){
+        
         if([self.button containsTouch:touch]){
-            self.layer.visible = YES;
-            CCMoveBy *move = [CCMoveBy actionWithDuration:0.7f position:ccp(0, -369)];
-            CCEaseExponentialOut *moveEase = [CCEaseExponentialOut actionWithAction:move];
-            [self runAction:moveEase];
+            self.model.screenState = @"locator";
         }
         
-    }*/
+    }
+    
+    else if([self.model.screenState isEqualToString:@"locator"]){
+        if(![self.layer containsTouch:touch]){
+            self.model.screenState = @"home";
+        }
+    }
 }
 
 @end
