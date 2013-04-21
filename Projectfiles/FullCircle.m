@@ -17,6 +17,15 @@
         self.lblDescription.position = ccp(0, -70);
         [self addChild:self.lblDescription];
         
+        self.closeBtn = [CCSprite spriteWithFile:@"bottom.png"];
+        self.closeBtn.position = ccp(0, -220);
+        [self addChild:self.closeBtn];
+        
+        self.lblClose = [CCLabelTTF labelWithString:@"Tap outside to close" fontName:@"Bebas Neue" fontSize:20];
+        self.lblClose.color = ccc3(76, 76, 76);
+        self.lblClose.position = ccp(0, -215);
+        [self addChild:self.lblClose];
+        
     }
     return self;
 }

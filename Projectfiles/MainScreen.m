@@ -185,6 +185,8 @@
 
 -(void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     
+    NSLog(@"%@", event);
+    
     UITouch* myTouch = [touches anyObject];
     CGPoint location = [myTouch locationInView: [myTouch view]];
     location = [self.director convertToGL:location];
