@@ -4,11 +4,13 @@
 
 -(id)initWithData:(BeatsFeatureData*)data{
     if(self=[super init]){
+        self.cascadeOpacityEnabled = YES;
         self.data = data;
         self.circle = [CCSprite spriteWithFile:@"featureCircle110.png"];
         [self addChild:self.circle];
-        self.scale = 0.9f;
+        self.scale = 0.0f;
         [self addIcon];
+        self.opacity = 0;
     }
     return self;
 }

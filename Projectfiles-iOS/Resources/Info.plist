@@ -35,16 +35,12 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Ubuntu-R.ttf</string>
-		<string>Ubuntu-C.ttf</string>
-		<string>Ubuntu-B.ttf</string>
+		<string>BebasNeue.otf</string>
 	</array>
 	<key>UIPrerenderedIcon</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
 	<dict>
-		<key>accelerometer</key>
-		<true/>
 		<key>armv7</key>
 		<true/>
 		<key>opengles-2</key>

@@ -17,7 +17,7 @@
  */
 -(id)initWithData:(NSDictionary *)dict{
     if(self = [super init]){
-        self.title = [dict objectForKey:@"name"];
+        self.title = [dict objectForKey:@"title"];
         self.icon = [dict objectForKey:@"icon"];
         self.description = [dict objectForKey:@"description"];
         self.image = [dict objectForKey:@"image"];
