@@ -8,9 +8,10 @@
 		<key>title</key>
 		<string>built-in remote</string>
 		<key>description</key>
-		<string>lorem ipsum</string>
+		<string>Take calls, skip songs and adjust volume right from the cord of 
+your Beats Studio headphones. No more searching for yourphone or music player just to find the right song.</string>
 		<key>image</key>
-		<string>example.png</string>
+		<string>promo.png</string>
 		<key>position</key>
 		<dict>
 			<key>x</key>
@@ -25,9 +26,9 @@
 		<key>title</key>
 		<string>battery life</string>
 		<key>description</key>
-		<string>lorem ipsum</string>
+		<string>When we first announced the studio headphone edition, we madea promise that battery life would be amazingly during.We believe we kept that promise with a non-stopplayback time of 298 hours.</string>
 		<key>image</key>
-		<string>example.png</string>
+		<string>front.png</string>
 		<key>position</key>
 		<dict>
 			<key>x</key>
@@ -42,9 +43,9 @@
 		<key>title</key>
 		<string>built-in microphone</string>
 		<key>description</key>
-		<string>lorem ipsum</string>
+		<string>Receiving a call while listening to music is no longer a pain, thanks to the built-in microphone we added to the remote.When receiving a call, simply press a button and you canfreely talk while keeping your headphones on!</string>
 		<key>image</key>
-		<string>example.png</string>
+		<string>center.png</string>
 		<key>position</key>
 		<dict>
 			<key>x</key>
@@ -59,9 +60,9 @@
 		<key>title</key>
 		<string>extra comfort</string>
 		<key>description</key>
-		<string>lorem ipsum</string>
+		<string>Super plush and covered with ultra-soft breathable materials, you’llbe cool and comfortable even during marathon listening sessions.The Beats by Dr. Dre logo on the side also acts as a mute buttonwhen you press it. No need to take them off to talk.</string>
 		<key>image</key>
-		<string>example.png</string>
+		<string>folded.png</string>
 		<key>position</key>
 		<dict>
 			<key>x</key>
@@ -76,9 +77,10 @@
 		<key>title</key>
 		<string>noise cancellation</string>
 		<key>description</key>
-		<string>lorem ipsum</string>
+		<string>Powered by a pair of AAA batteries, the noise cancellation feature
+in a pair of stylish Beats Studio headphones amplifies themusic as it blocks out noise, giving you consistentlypowerful and intense sound.</string>
 		<key>image</key>
-		<string>example.png</string>
+		<string>side.png</string>
 		<key>position</key>
 		<dict>
 			<key>x</key>
@@ -93,9 +95,9 @@
 		<key>title</key>
 		<string>30-day money back</string>
 		<key>description</key>
-		<string>lorem ipsum</string>
+		<string>We believe that anyone who tries our product, will instantly fallin love with it. We even are so convinced of our product,that we offer you a 30-day money back guarantee,no strings attached. Go for it!</string>
 		<key>image</key>
-		<string>example.png</string>
+		<string>closeup.png</string>
 		<key>position</key>
 		<dict>
 			<key>x</key>

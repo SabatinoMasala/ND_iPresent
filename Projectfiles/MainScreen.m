@@ -46,6 +46,10 @@
         // Initializing audio engine
         [CDAudioManager initAsynchronously:kAMM_FxOnly];
         [SimpleAudioEngine sharedEngine];
+        
+        self.overlay = [CCLayerColor layerWithColor:ccc4(0, 0, 0, 255)];
+        self.overlay.opacity = 0;
+        [self addChild:self.overlay];
 
         [self startAnimations];
         
@@ -58,6 +62,19 @@
 
 -(void) addNotificationObservers{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCenterText:) name:kTOGGLE_CENTER_SIZE object:self.model];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openCenter:) name:kCENTER_OPEN object:self.model];
+}
+
+-(void)openCenter:(id)sender{
+    float opacity = 0.0f;
+    if(self.model.centerOpen){
+        opacity = 0.6f * 255;
+    }
+    CCFadeTo *fade = [CCFadeTo actionWithDuration:0.2f opacity:opacity];
+    CCSequence *seq = [CCSequence actions:fade, nil];
+    [self.overlay runAction:seq];
+    self.center.zOrder = [self.children count] + 1;
+    self.overlay.zOrder = [self.children count];
 }
 
 -(void)changeCenterText:(id)sender{
@@ -172,27 +189,35 @@
     CGPoint location = [myTouch locationInView: [myTouch view]];
     location = [self.director convertToGL:location];
     
-    CGPoint circleCenter;
-    float circleRadius = 63;
-    for(NSUInteger i=0; i<[self.arrItems count]; i++){
-        BeatsFeature *f = [self.arrItems objectAtIndex:i];
-        circleCenter = f.position;
-        if(ccpLengthSQ(ccpSub(circleCenter, location))<(circleRadius*circleRadius))
-        {
-            [f stopAllActions];
-            CCEaseOut *scaleEaseOut = [CCEaseOut actionWithAction:[CCScaleTo actionWithDuration:0.2f scale:1.0f] rate:2];
-            CCEaseOut *moveEaseOut = [CCEaseOut actionWithAction:[CCMoveTo actionWithDuration:0.2f position:location] rate:2];
-            [f runAction:scaleEaseOut];
-            [f runAction:moveEaseOut];
-            f.zOrder = [self.children count];
-            self.model.draggingSprite = f;
-            return;
+    if(!self.model.centerOpen){
+        CGPoint circleCenter;
+        float circleRadius = 63;
+        for(NSUInteger i=0; i<[self.arrItems count]; i++){
+            BeatsFeature *f = [self.arrItems objectAtIndex:i];
+            circleCenter = f.position;
+            if(ccpLengthSQ(ccpSub(circleCenter, location))<(circleRadius*circleRadius))
+            {
+                [f stopAllActions];
+                CCEaseOut *scaleEaseOut = [CCEaseOut actionWithAction:[CCScaleTo actionWithDuration:0.2f scale:1.0f] rate:2];
+                CCEaseOut *moveEaseOut = [CCEaseOut actionWithAction:[CCMoveTo actionWithDuration:0.2f position:location] rate:2];
+                [f runAction:scaleEaseOut];
+                [f runAction:moveEaseOut];
+                self.center.zOrder = [self.children count];
+                f.zOrder = [self.children count];
+                self.model.draggingSprite = f;
+                return;
+            }
         }
     }
     
 }
 
 -(void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+    
+    UITouch* myTouch = [touches anyObject];
+    CGPoint location = [myTouch locationInView: [myTouch view]];
+    location = [self.director convertToGL:location];
+    
     [self.model.draggingSprite stopAllActions];
     CCEaseOut *scaleEaseOut = [CCEaseOut actionWithAction:[CCScaleTo actionWithDuration:0.2f scale:0.9f] rate:2];
     [self.model.draggingSprite runAction:scaleEaseOut];
@@ -202,10 +227,14 @@
         [self.model.draggingSprite runAction:easeMove];
     }
     if(!self.model.centerCanAcceptFeatures){
-        self.touchEnabled = NO;
-        self.center.scale = 2.8f;
-        self.center.zOrder = [self.children count];
-        //self.model.centerCanAcceptFeatures = YES;
+        self.model.centerOpen = YES;
+        self.model.centerCanAcceptFeatures = YES;
+    }
+    
+    CGPoint circleCenter = self.director.screenCenter;
+    float circleRadius = 282;
+    if(ccpLengthSQ(ccpSub(circleCenter, location)) > (circleRadius*circleRadius)){
+        self.model.centerOpen = NO;
     }
     self.model.draggingSprite = nil;
 }

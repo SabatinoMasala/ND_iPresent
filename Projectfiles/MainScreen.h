@@ -15,6 +15,7 @@
 
 @property (strong, nonatomic) CenterSprite *center;
 @property (strong, nonatomic) CCLabelTTF *centerLabel;
+@property (strong, nonatomic) CCLayerColor *overlay;
 
 @property (strong, nonatomic) NSMutableArray *arrItems;
 @property (strong, nonatomic) NSMutableArray *arrDottedLines;
