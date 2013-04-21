@@ -4,7 +4,7 @@
 @implementation AppModel
 
 NSString * const kTOGGLE_CENTER_SIZE = @"TOGGLE_CENTER_SIZE";
-NSString * const kCENTER_OPEN = @"CENTER_OPEN";
+NSString * const kSCREEN_STATE_CHANGED = @"SCREEN_STATE_CHANGED";
 
 /* Singleton code */
 
@@ -20,16 +20,17 @@ static AppModel *instance;
 
 -(id) init{
     if(self = [super init]){
-        _centerCanAcceptFeatures = YES;
-        _centerOpen = NO;
+        _isOverCenter = NO;
+        _screenState = @"home";
     }
     return self;
 }
 
--(void)setCenterOpen:(BOOL)centerOpen{
-    if(centerOpen != _centerOpen){
-        _centerOpen = centerOpen;
-        [[NSNotificationCenter defaultCenter] postNotificationName:kCENTER_OPEN object:self];
+-(void)setScreenState:(NSString *)screenState{
+    if(![_screenState isEqualToString:screenState]){
+        self.prevScreenState = _screenState;
+        _screenState = screenState;
+        [[NSNotificationCenter defaultCenter] postNotificationName:kSCREEN_STATE_CHANGED object:self];
     }
 }
 
@@ -40,11 +41,11 @@ static AppModel *instance;
     }
 }
 
--(void)setCenterCanAcceptFeatures:(BOOL)centerCanAcceptFeatures{
-    if(centerCanAcceptFeatures != _centerCanAcceptFeatures){
-        if(!centerCanAcceptFeatures) [[SimpleAudioEngine sharedEngine] playEffect:@"click_1.caf" pitch:1.0f pan:0 gain:0.3f];
+-(void)setIsOverCenter:(BOOL)isOverCenter{
+    if(isOverCenter != _isOverCenter){
+        if(!isOverCenter) [[SimpleAudioEngine sharedEngine] playEffect:@"click_1.caf" pitch:1.0f pan:0 gain:0.3f];
+        _isOverCenter = isOverCenter;
         [[NSNotificationCenter defaultCenter] postNotificationName:kTOGGLE_CENTER_SIZE object:self];
-        _centerCanAcceptFeatures = centerCanAcceptFeatures;
     }
 }
 

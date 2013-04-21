@@ -2,6 +2,7 @@
 #import "BeatsFeature.h"
 #import "AppModel.h"
 #import "CenterSprite.h"
+#import "LocateResellerOverlay.h"
 
 @interface MainScreen : CCLayer
 {
@@ -15,6 +16,7 @@
 
 @property (strong, nonatomic) CenterSprite *center;
 @property (strong, nonatomic) CCLabelTTF *centerLabel;
+@property (strong, nonatomic) LocateResellerOverlay *locateResellerOverlay;
 @property (strong, nonatomic) CCLayerColor *overlay;
 
 @property (strong, nonatomic) NSMutableArray *arrItems;

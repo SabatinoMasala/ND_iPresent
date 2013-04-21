@@ -7,7 +7,7 @@
         
         self.model = [AppModel sharedModel];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(toggleCenterSize:) name:kTOGGLE_CENTER_SIZE object:self.model];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openCenter:) name:kCENTER_OPEN object:self.model];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openCenter:) name:kSCREEN_STATE_CHANGED object:self.model];
         
         self.fullCircle = [[FullCircle alloc] init];
         self.fullCircle.scale = 0;
@@ -22,14 +22,14 @@
 }
 
 -(void)toggleCenterSize:(id)sender{
-    float scale = 1.0f;
-    if(!self.model.centerCanAcceptFeatures) scale = 0.9f;
+    float scale = 0.9f;
+    if(self.model.isOverCenter) scale = 1.0f;
     CCEaseOut *easeout = [CCEaseOut actionWithAction:[CCScaleTo actionWithDuration:0.2f scale:scale] rate:2];
     [self runAction:easeout];
 }
 
 -(void)openCenter:(id)sender{
-    if(self.model.centerOpen){ // Open up the big circle
+    if([self.model.screenState isEqualToString:@"detail"]){ // Open up the big circle
         
         [self.fullCircle update:self.model.draggingSprite.data];
         
