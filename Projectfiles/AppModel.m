@@ -22,9 +22,17 @@ static AppModel *instance;
     if(self = [super init]){
         _isOverCenter = NO;
         _screenState = @"home";
+        _appState = @"active";
         self.canTouchFeatures = YES;
     }
     return self;
+}
+
+-(void)setAppState:(NSString *)appState{
+    if(appState != _appState){
+        _appState = appState;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"APP_STATE_CHANGED" object:self];
+    }
 }
 
 -(void)setScreenState:(NSString *)screenState{

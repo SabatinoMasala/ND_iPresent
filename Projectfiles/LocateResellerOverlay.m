@@ -33,13 +33,14 @@
 }
 
 -(void)addMapkit{
+    NSLog(@"add mapkit");
     UIView *view = [CCDirector sharedDirector].view.superview;
     
     if(!self.map){
         self.map = [[MKMapView alloc] initWithFrame:CGRectMake(15, 15, 605, 338)];
-        self.map.opaque = NO;
     }
     
+//    self.map.opaque = NO;
 //    self.map.alpha = 0;
 //    [UIView beginAnimations:nil context:nil];
 //    [UIView setAnimationDuration:1];
@@ -49,6 +50,7 @@
 }
 
 -(void)removeMapkit{
+    NSLog(@"removing mapkit");
     [self.map removeFromSuperview];
     self.map = nil;
 }

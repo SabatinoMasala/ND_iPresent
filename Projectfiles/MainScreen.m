@@ -76,6 +76,32 @@
 -(void) addNotificationObservers{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeCenterText:) name:kTOGGLE_CENTER_SIZE object:self.model];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(screenChanged:) name:kSCREEN_STATE_CHANGED object:self.model];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appStateChanged:) name:@"APP_STATE_CHANGED" object:self.model];
+}
+
+// Background or foreground?
+-(void)appStateChanged:(id)sender{
+    
+    // We're going into the background
+    if([self.model.appState isEqualToString:@"background"]){
+        // We remove mapview to prevent it going to fullscreen
+        if([self.model.screenState isEqualToString:@"locator"]){
+            [self.locateResellerOverlay removeMapkit];
+        }
+    }
+    
+    // We're coming back
+    if([self.model.appState isEqualToString:@"active"]){
+        // We add mapview back after a small delay to prevent it from going fullscreen
+        if([self.model.screenState isEqualToString:@"locator"]){
+            CCCallBlock *block = [CCCallBlock actionWithBlock:^{
+                [self.locateResellerOverlay addMapkit];
+            }];
+            CCDelayTime *delay = [CCDelayTime actionWithDuration:0.1f];
+            CCSequence *seq = [CCSequence actions:delay, block, nil];
+            [self runAction:seq];
+        }
+    }
 }
 
 // Screen changed
