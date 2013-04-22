@@ -14,6 +14,10 @@
         self.layer.visible = NO;
         [self addChild:self.layer];
         
+        self.mapPlaceholder = [CCLayerColor layerWithColor:ccc4(240, 235, 212, 255) width:604 height:337];
+        self.mapPlaceholder.position = ccp(16, 58);
+        [self addChild:self.mapPlaceholder];
+        
         self.button = [CCLayerColor layerWithColor:ccc4(114, 115, 115, 255) width:215 height:42];
         self.button.position = ccp((w / 2) - (215 / 2), 0);
         [self addChild:self.button];
@@ -26,6 +30,27 @@
         
     }
     return self;
+}
+
+-(void)addMapkit{
+    UIView *view = [CCDirector sharedDirector].view.superview;
+    
+    if(!self.map){
+        self.map = [[MKMapView alloc] initWithFrame:CGRectMake(15, 15, 605, 338)];
+        self.map.opaque = NO;
+    }
+    
+//    self.map.alpha = 0;
+//    [UIView beginAnimations:nil context:nil];
+//    [UIView setAnimationDuration:1];
+//    self.map.alpha = 1.0;
+//    [UIView commitAnimations];
+    [view addSubview:self.map];
+}
+
+-(void)removeMapkit{
+    [self.map removeFromSuperview];
+    self.map = nil;
 }
 
 -(void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{

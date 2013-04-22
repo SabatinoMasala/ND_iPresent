@@ -99,14 +99,19 @@
         self.overlay.zOrder = [self.children count];
         self.locateResellerOverlay.zOrder = [self.children count];
         [self.locateResellerOverlay stopAllActions];
-        CCMoveTo *moveTo = [CCMoveTo actionWithDuration:1.0f position:ccp(0, 398)];
+        CCMoveTo *moveTo = [CCMoveTo actionWithDuration:1.0f position:ccp(0, 357)];
         CCEaseExponentialOut *easeMove = [CCEaseExponentialOut actionWithAction:moveTo];
+        CCCallBlock *end = [CCCallBlock actionWithBlock:^{
+            [self.locateResellerOverlay addMapkit];
+        }];
         self.locateResellerOverlay.layer.visible = YES;
-        [self.locateResellerOverlay runAction:easeMove];
+        CCSequence *seq = [CCSequence actions:easeMove, end, nil];
+        [self.locateResellerOverlay runAction:seq];
     }
     
     // Did we return to the home state from the locator state?
     if([self.model.screenState isEqualToString:@"home"] && [self.model.prevScreenState isEqualToString:@"locator"]){
+        [self.locateResellerOverlay removeMapkit];
         [self showOverlay:NO];
         [self.locateResellerOverlay stopAllActions];
         CCMoveTo *moveTo = [CCMoveTo actionWithDuration:1.0f position:ccp(0, 726)];

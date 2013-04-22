@@ -22,6 +22,7 @@
 		041F20E41724398B00235048 /* center@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 041F20D81724398B00235048 /* center@2x.png */; };
 		041F20E51724398B00235048 /* closeup.png in Resources */ = {isa = PBXBuildFile; fileRef = 041F20D91724398B00235048 /* closeup.png */; };
 		041F20E61724398B00235048 /* closeup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 041F20DA1724398B00235048 /* closeup@2x.png */; };
+		047754921724AD2D00816F2E /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 047754911724AD2D00816F2E /* MapKit.framework */; };
 		048B2BFF1722DC9A000308A1 /* featureCircle110@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 048B2BFD1722DC9A000308A1 /* featureCircle110@2x.png */; };
 		048B2C001722DC9A000308A1 /* featureCircle110.png in Resources */ = {isa = PBXBuildFile; fileRef = 048B2BFE1722DC9A000308A1 /* featureCircle110.png */; };
 		048B2C031722DFB3000308A1 /* BeatsFeature.m in Sources */ = {isa = PBXBuildFile; fileRef = 048B2C021722DFB3000308A1 /* BeatsFeature.m */; };
@@ -113,6 +114,7 @@
 		041F20D81724398B00235048 /* center@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "center@2x.png"; sourceTree = "<group>"; };
 		041F20D91724398B00235048 /* closeup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = closeup.png; sourceTree = "<group>"; };
 		041F20DA1724398B00235048 /* closeup@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "closeup@2x.png"; sourceTree = "<group>"; };
+		047754911724AD2D00816F2E /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/MapKit.framework; sourceTree = DEVELOPER_DIR; };
 		048B2BFD1722DC9A000308A1 /* featureCircle110@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "featureCircle110@2x.png"; sourceTree = "<group>"; };
 		048B2BFE1722DC9A000308A1 /* featureCircle110.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = featureCircle110.png; sourceTree = "<group>"; };
 		048B2C011722DFB3000308A1 /* BeatsFeature.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BeatsFeature.h; path = Resources/BeatsFeature.h; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				047754921724AD2D00816F2E /* MapKit.framework in Frameworks */,
 				DC65615C13A969B600A7AC53 /* libbox2d-ios.a in Frameworks */,
 				DC65615D13A969B600A7AC53 /* libchipmunk-ios.a in Frameworks */,
 				DC65615E13A969B600A7AC53 /* libchipmunk-spacemanager-ios.a in Frameworks */,
@@ -410,6 +413,7 @@
 		DCC1A0E613A94ED5005BD75D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				047754911724AD2D00816F2E /* MapKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
