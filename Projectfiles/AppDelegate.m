@@ -14,10 +14,12 @@
 
 -(void)applicationWillEnterForeground:(UIApplication *)application{
     self.model.appState = @"active";
+    [[CCDirector sharedDirector] startAnimation];
 }
 
 -(void)applicationDidEnterBackground:(UIApplication *)application{
     self.model.appState = @"background";
+    [[CCDirector sharedDirector] stopAnimation];
 }
 
 @end

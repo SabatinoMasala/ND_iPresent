@@ -1,5 +1,6 @@
 #import "CCSprite.h"
 #import "BeatsFeatureData.h"
+#import "AppModel.h"
 
 @interface FullCircle : CCSprite
 

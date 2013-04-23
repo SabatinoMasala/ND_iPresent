@@ -18,9 +18,9 @@
 @property (strong, nonatomic) CCLabelTTF *centerLabel;
 @property (strong, nonatomic) LocateResellerOverlay *locateResellerOverlay;
 @property (strong, nonatomic) CCLayerColor *overlay;
+@property (strong, nonatomic) CCSprite *dotted;
 
 @property (strong, nonatomic) NSMutableArray *arrItems;
-@property (strong, nonatomic) NSMutableArray *arrDottedLines;
 @property (strong, nonatomic) NSMutableArray *arrLabels;
 
 @end

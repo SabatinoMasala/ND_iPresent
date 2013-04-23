@@ -14,7 +14,6 @@
      
         // Initialize, initialize!
         self.arrItems = [[NSMutableArray alloc] init];
-        self.arrDottedLines = [[NSMutableArray alloc] init];
         self.arrLabels = [[NSMutableArray alloc] init];
         
         self.model = [AppModel sharedModel];
@@ -23,10 +22,15 @@
         [self addNotificationObservers];
         self.touchEnabled = YES;
         
+        
         // Background
         CCSprite *bg = [CCSprite spriteWithFile:@"bg.png"];
         bg.position = self.director.screenCenter;
         [self addChild:bg];
+        
+        self.dotted = [CCSprite spriteWithFile:@"dotted.png"];
+        self.dotted.visible = NO;
+        [self addChild:self.dotted];
         
         // Logo in bottom left
         CCSprite *logo = [CCSprite spriteWithFile:@"logo.png"];
@@ -62,12 +66,14 @@
         self.overlay = [CCLayerColor layerWithColor:ccc4(0, 0, 0, 255)];
         self.overlay.opacity = 0;
         [self addChild:self.overlay];
-
+        
         [self startAnimations];
         
         // Background color
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	}
+
+        
+}
 
 	return self;
 }
@@ -87,6 +93,10 @@
         // We remove mapview to prevent it going to fullscreen
         if([self.model.screenState isEqualToString:@"locator"]){
             [self.locateResellerOverlay removeMapkit];
+        }
+        // If we're dragging & press the home button, we should update
+        if(self.model.draggingSprite){
+            [self ccTouchesEnded:nil withEvent:nil];
         }
     }
     
@@ -191,13 +201,6 @@
         [self.arrLabels addObject:lbl];
         [self addChild:lbl];
         
-        // Create the dotted lines underneath the features
-        CCSprite *dottedLines = [CCSprite spriteWithFile:@"dotted.png"];
-        dottedLines.position = data.position;
-        dottedLines.opacity = 0;
-        [self.arrDottedLines addObject:dottedLines];
-        [self addChild:dottedLines];
-        
         [self addChild:feature];
     }
     
@@ -242,9 +245,6 @@
         [self introAnimationFadeIn:[self.arrLabels objectAtIndex:index_A] andDelay:i];
         [self introAnimationFadeIn:[self.arrLabels objectAtIndex:index_B] andDelay:i];
         
-        // Animate the dotted lines
-        [self introAnimationFadeIn:[self.arrDottedLines objectAtIndex:index_A] andDelay:i];
-        [self introAnimationFadeIn:[self.arrDottedLines objectAtIndex:index_B] andDelay:i];
     }
 }
 
@@ -336,6 +336,15 @@
                 self.center.zOrder = [self.children count];
                 f.zOrder = [self.children count];
                 
+                self.dotted.position = f.data.position;
+                self.dotted.visible = YES;
+                
+                CCRotateBy *rotate_A = [CCRotateBy actionWithDuration:8.0f angle:180];
+                CCRotateBy *rotate_B = [CCRotateBy actionWithDuration:8.0f angle:180];
+                CCSequence *seq = [CCSequence actions:rotate_A, rotate_B, nil];
+                CCRepeatForever *rotate_inf = [CCRepeatForever actionWithAction:seq];
+                [self.dotted runAction:rotate_inf];
+                
                 // Set the current dragging feature to the model
                 self.model.draggingSprite = f;
             }
@@ -362,7 +371,11 @@
         // Move back to your place!
         CCMoveTo *move = [CCMoveTo actionWithDuration:0.5f position:((BeatsFeature *)self.model.draggingSprite).data.position];
         CCEaseElasticOut *easeMove = [CCEaseElasticOut actionWithAction:move period:1.0f];
-        [self.model.draggingSprite runAction:easeMove];
+        CCCallBlock *afterAnimate = [CCCallBlock actionWithBlock:^{
+            if(!self.model.draggingSprite) [self.dotted stopAllActions];
+        }];
+        CCSequence *seq = [CCSequence actions:easeMove, afterAnimate, nil];
+        [self.model.draggingSprite runAction:seq];
         
     }
     
@@ -380,6 +393,14 @@
         float circleRadius = 257;
         if(ccpLengthSQ(ccpSub(circleCenter, location)) > (circleRadius*circleRadius)){
             self.model.screenState = @"home";
+        }
+        
+        // Let's see if we clicked on the close button
+        if([self.center.fullCircle.closeBtn containsTouch:myTouch]){
+            if(ccpLengthSQ(ccpSub(self.center.position, location))<(228*228)){
+                [[SimpleAudioEngine sharedEngine] playEffect:@"click_2.caf" pitch:0.8f pan:0 gain:0.2f];
+                self.model.screenState = @"home";
+            }
         }
         
     }

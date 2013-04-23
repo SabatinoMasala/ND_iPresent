@@ -21,7 +21,7 @@
         self.closeBtn.position = ccp(0, -220);
         [self addChild:self.closeBtn];
         
-        self.lblClose = [CCLabelTTF labelWithString:@"Tap outside to close" fontName:@"Bebas Neue" fontSize:20];
+        self.lblClose = [CCLabelTTF labelWithString:@"Close" fontName:@"Bebas Neue" fontSize:20];
         self.lblClose.color = ccc3(76, 76, 76);
         self.lblClose.position = ccp(0, -215);
         [self addChild:self.lblClose];
@@ -33,6 +33,7 @@
 -(void)update:(BeatsFeatureData *)data{
     [self.lblTitle setString:data.title];
     [self.lblDescription setString:data.description];
+    
     if(self.image){
         [self.image removeFromParentAndCleanup:YES];
         self.image = nil;
