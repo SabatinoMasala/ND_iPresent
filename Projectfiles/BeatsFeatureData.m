@@ -21,6 +21,7 @@
         self.icon = [dict objectForKey:@"icon"];
         self.description = [dict objectForKey:@"description"];
         self.image = [dict objectForKey:@"image"];
+        self.interactive = [[dict objectForKey:@"interactive"] integerValue];
 
         NSDictionary *pos = [dict objectForKey:@"position"];
         self.position = CGPointMake([[pos objectForKey:@"x"] intValue], [[pos objectForKey:@"y"] intValue]);

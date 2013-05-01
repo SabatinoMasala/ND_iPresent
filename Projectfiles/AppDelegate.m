@@ -19,6 +19,7 @@
 
 -(void)applicationDidEnterBackground:(UIApplication *)application{
     self.model.appState = @"background";
+    [self.model bluetoothDisconnected];
     [[CCDirector sharedDirector] stopAnimation];
 }
 

@@ -28,6 +28,43 @@ static AppModel *instance;
     return self;
 }
 
+-(void)bluetoothDisconnected{
+    _bluetoothConnection = NO;
+    _isConnectedBluetooth = NO;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"BLUETOOTH_DISCONNECT" object:self];
+}
+
+-(void)resetBluetooth{
+    _bluetoothConnection = NO;
+    _isConnectedBluetooth = NO;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"BLUETOOTH_RESET" object:self];
+}
+
+-(void) toggleDetailView{
+    [[SimpleAudioEngine sharedEngine] playEffect:@"click_2.caf" pitch:1.0f pan:0 gain:0.2f];
+    if([self.detailView isEqualToString:@"interactive"]){
+        self.detailView = @"info";
+    }
+    else{
+        self.detailView = @"interactive";
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"DETAIL_CHANGED" object:self];
+}
+
+-(void)setBluetoothConnection:(BOOL)bluetoothConnection{
+    if(_bluetoothConnection != bluetoothConnection){
+        _bluetoothConnection = bluetoothConnection;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"BLUETOOTH" object:self];
+    }
+}
+
+-(void)setIsConnectedBluetooth:(BOOL)isConnectedBluetooth{
+    if(_isConnectedBluetooth != isConnectedBluetooth){
+        _isConnectedBluetooth = isConnectedBluetooth;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"BLUETOOTH_CONNECT" object:self];
+    }
+}
+
 -(void)setAppState:(NSString *)appState{
     if(appState != _appState){
         _appState = appState;

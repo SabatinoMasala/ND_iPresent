@@ -1,11 +1,11 @@
-#import "MainScreen.h"
+#import "MainScreenIPad.h"
 #import "SimpleAudioEngine.h"
 #import "BeatsFeatureData.h"
 
-@interface MainScreen (PrivateMethods)
+@interface MainScreenIPad (PrivateMethods)
 @end
 
-@implementation MainScreen
+@implementation MainScreenIPad
 
 -(id) init
 {
@@ -71,7 +71,6 @@
         
         // Background color
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-
         
 }
 
@@ -387,6 +386,14 @@
     
     // Are we on a detail page?
     if([self.model.screenState isEqualToString:@"detail"]){
+        
+        if(self.center.fullCircle.data.interactive){
+            CGPoint p = CGPointMake(758, 454);
+            if(ccpLengthSQ(ccpSub(p, location)) < (36*36)){
+                [self.model toggleDetailView];
+                return;
+            }
+        }
         
         // Let's check if we clicked outside the circle (on the black overlay)
         CGPoint circleCenter = self.director.screenCenter;

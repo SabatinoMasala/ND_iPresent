@@ -10,12 +10,12 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(openCenter:) name:kSCREEN_STATE_CHANGED object:self.model];
         
         self.fullCircle = [[FullCircle alloc] init];
-        self.fullCircle.scale = 0;
+        self.fullCircle.scale = 0.001f;
         [self addChild:self.fullCircle];
         
         self.smallCircle = [CCSprite spriteWithFile:@"center110.png"];
         [self addChild:self.smallCircle];
-        self.scale = 0.0f;
+        self.scale = 0.001f;
         
     }
     return self;
@@ -44,6 +44,9 @@
             [self.fullCircle runAction:animation];
         }
         else{ // Close the big circle
+            
+            [self.fullCircle shutDown];
+            
             self.smallCircle.scale = 0;
             CCFadeTo *fade_in = [CCFadeTo actionWithDuration:0.2f opacity:255];
             CCScaleTo *scale_to = [CCScaleTo actionWithDuration:1.0f scale:1.0f];
@@ -52,7 +55,7 @@
             [self.smallCircle runAction:spawn];
             
             CCFadeTo *fade_out = [CCFadeTo actionWithDuration:0.2f opacity:0];
-            CCScaleTo *scale_0 = [CCScaleTo actionWithDuration:1.0f scale:0.0f];
+            CCScaleTo *scale_0 = [CCScaleTo actionWithDuration:1.0f scale:0.001f];
             CCEaseElasticOut *scale_ease = [CCEaseElasticOut actionWithAction:scale_0 period:0.6f];
             CCSpawn *animation = [CCSpawn actions:fade_out, scale_ease, nil];
             [self.fullCircle runAction:animation];

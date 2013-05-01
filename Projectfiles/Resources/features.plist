@@ -9,9 +9,12 @@
 		<string>built-in remote</string>
 		<key>description</key>
 		<string>Take calls, skip songs and adjust volume right from the cord of 
-your Beats Studio headphones. No more searching for yourphone or music player just to find the right song.</string>
+your Beats Studio headphones. No more searching for your
+phone or music player just to find the right song.</string>
 		<key>image</key>
 		<string>promo.png</string>
+		<key>interactive</key>
+		<true/>
 		<key>position</key>
 		<dict>
 			<key>x</key>
@@ -26,9 +29,14 @@ your Beats Studio headphones. No more searching for yourphone or music player j
 		<key>title</key>
 		<string>battery life</string>
 		<key>description</key>
-		<string>When we first announced the studio headphone edition, we madea promise that battery life would be amazingly during.We believe we kept that promise with a non-stopplayback time of 298 hours.</string>
+		<string>When we first announced the studio headphone edition, we made
+a promise that battery life would be amazingly during.
+We believe we kept that promise with a non-stop
+playback time of 298 hours.</string>
 		<key>image</key>
 		<string>front.png</string>
+		<key>interactive</key>
+		<false/>
 		<key>position</key>
 		<dict>
 			<key>x</key>
@@ -43,9 +51,14 @@ your Beats Studio headphones. No more searching for yourphone or music player j
 		<key>title</key>
 		<string>built-in microphone</string>
 		<key>description</key>
-		<string>Receiving a call while listening to music is no longer a pain, thanks to the built-in microphone we added to the remote.When receiving a call, simply press a button and you canfreely talk while keeping your headphones on!</string>
+		<string>Receiving a call while listening to music is no longer a pain, 
+thanks to the built-in microphone we added to the remote.
+When receiving a call, simply press a button and you can
+freely talk while keeping your headphones on!</string>
 		<key>image</key>
 		<string>center.png</string>
+		<key>interactive</key>
+		<false/>
 		<key>position</key>
 		<dict>
 			<key>x</key>
@@ -60,9 +73,14 @@ your Beats Studio headphones. No more searching for yourphone or music player j
 		<key>title</key>
 		<string>extra comfort</string>
 		<key>description</key>
-		<string>Super plush and covered with ultra-soft breathable materials, you’llbe cool and comfortable even during marathon listening sessions.The Beats by Dr. Dre logo on the side also acts as a mute buttonwhen you press it. No need to take them off to talk.</string>
+		<string>Super plush and covered with ultra-soft breathable materials, you’ll
+be cool and comfortable even during marathon listening sessions.
+The Beats by Dr. Dre logo on the side also acts as a mute button
+when you press it. No need to take them off to talk.</string>
 		<key>image</key>
 		<string>folded.png</string>
+		<key>interactive</key>
+		<false/>
 		<key>position</key>
 		<dict>
 			<key>x</key>
@@ -78,9 +96,13 @@ your Beats Studio headphones. No more searching for yourphone or music player j
 		<string>noise cancellation</string>
 		<key>description</key>
 		<string>Powered by a pair of AAA batteries, the noise cancellation feature
-in a pair of stylish Beats Studio headphones amplifies themusic as it blocks out noise, giving you consistentlypowerful and intense sound.</string>
+in a pair of stylish Beats Studio headphones amplifies the
+music as it blocks out noise, giving you consistently
+powerful and intense sound.</string>
 		<key>image</key>
 		<string>side.png</string>
+		<key>interactive</key>
+		<false/>
 		<key>position</key>
 		<dict>
 			<key>x</key>
@@ -95,9 +117,14 @@ in a pair of stylish Beats Studio headphones amplifies themusic as it blocks ou
 		<key>title</key>
 		<string>30-day money back</string>
 		<key>description</key>
-		<string>We believe that anyone who tries our product, will instantly fallin love with it. We even are so convinced of our product,that we offer you a 30-day money back guarantee,no strings attached. Go for it!</string>
+		<string>We believe that anyone who tries our product, will instantly fall
+in love with it. We even are so convinced of our product,
+that we offer you a 30-day money back guarantee,
+no strings attached. Go for it!</string>
 		<key>image</key>
 		<string>closeup.png</string>
+		<key>interactive</key>
+		<false/>
 		<key>position</key>
 		<dict>
 			<key>x</key>

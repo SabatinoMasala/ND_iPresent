@@ -4,7 +4,7 @@
 #import "CenterSprite.h"
 #import "LocateResellerOverlay.h"
 
-@interface MainScreen : CCLayer
+@interface MainScreenIPad : CCLayer
 {
 	NSString* helloWorldString;
 	NSString* helloWorldFontName;

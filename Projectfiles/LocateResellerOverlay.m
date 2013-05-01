@@ -16,6 +16,27 @@
         self.layer.visible = NO;
         [self addChild:self.layer];
         
+        self.lblErrors = [CCLabelTTF labelWithString:@"" fontName:@"Bebas Neue" fontSize:25];
+        self.lblErrors.position = CGPointMake(819, 227);
+        self.lblErrors.visible = NO;
+        [self addChild:self.lblErrors];
+        
+        self.lblClosestReseller = [CCLabelTTF labelWithString:@"closest reseller near you:" fontName:@"Bebas Neue" fontSize:30];
+        self.lblClosestReseller.position = CGPointMake(819, 286);
+        [self addChild:self.lblClosestReseller];
+        
+        self.lblReseller = [CCLabelTTF labelWithString:@"Calculating" fontName:@"Futura-CondensedMedium" fontSize:25];
+        self.lblReseller.position = CGPointMake(819, self.lblClosestReseller.position.y - 35);
+        [self addChild:self.lblReseller];
+
+        self.lblDistanceInKm = [CCLabelTTF labelWithString:@"distance in kilometer" fontName:@"Bebas Neue" fontSize:30];
+        self.lblDistanceInKm.position = CGPointMake(819, self.lblReseller.position.y - 45);
+        [self addChild:self.lblDistanceInKm];
+        
+        self.lblDistance = [CCLabelTTF labelWithString:@"Calculating" fontName:@"Futura-CondensedMedium" fontSize:25];
+        self.lblDistance.position = CGPointMake(819, self.lblDistanceInKm.position.y - 35);
+        [self addChild:self.lblDistance];
+        
         self.mapPlaceholder = [CCLayerColor layerWithColor:ccc4(240, 235, 212, 255) width:604 height:337];
         self.mapPlaceholder.position = ccp(16, 58);
         [self addChild:self.mapPlaceholder];
@@ -50,6 +71,15 @@
 	return pin;
 }
 
+-(void)setError:(NSString *)error{
+    self.lblErrors.visible = YES;
+    [self.lblErrors setString:error];
+    self.lblReseller.visible = NO;
+    self.lblDistanceInKm.visible = NO;
+    self.lblDistance.visible = NO;
+    self.lblClosestReseller.visible = NO;
+}
+
 -(void)addMapkit{
     NSLog(@"add mapkit");
     UIView *view = [CCDirector sharedDirector].view.superview;
@@ -61,10 +91,13 @@
         
         if([CLLocationManager locationServicesEnabled]){
             self.locationManager = [[CLLocationManager alloc] init];
-            self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+            self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
             self.locationManager.distanceFilter = 1;
             self.locationManager.delegate = self;
             [self.locationManager startUpdatingLocation];
+        }
+        else{
+            [self setError:@"Locations not available"];
         }
         
         // Add some caching
@@ -74,20 +107,23 @@
             
         }
         else{
-        
-            NSURL *url = [NSURL URLWithString:@"http://127.0.0.1/nd/iPresent/api/restapi.php/stores.json"];
-            NSURLRequest *req = [NSURLRequest requestWithURL:url];
-            AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:req success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
-                if([self.model.screenState isEqualToString:@"locator"]){
-                    [self addPins:JSON];
-                }
-                self.model.storeLocationsJSON = JSON;
-            } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-                if([self.model.screenState isEqualToString:@"locator"]){
-                    NSLog(@"Stores could not be loaded");
-                }
-            }];
-            [operation start];
+            
+            if([CLLocationManager locationServicesEnabled]){
+                NSURL *url = [NSURL URLWithString:@"http://127.0.0.1/nd/iPresent/api/restapi.php/stores.json"];
+                NSURLRequest *req = [NSURLRequest requestWithURL:url];
+                AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:req success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+                    if([self.model.screenState isEqualToString:@"locator"]){
+                        [self addPins:JSON];
+                    }
+                    self.model.storeLocationsJSON = JSON;
+                } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+                    if([self.model.screenState isEqualToString:@"locator"]){
+                        [self setError:@"Couldn't load store locations"];
+                    }
+                }];
+                [operation start];
+            }
+                
         }
         
     }
@@ -97,11 +133,32 @@
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
     if(self.model.storeLocationsJSON){
+        float shortest = 0;
+        NSDictionary *val;
         for (NSUInteger i = 0; i<[self.model.storeLocationsJSON count]; i++) {
             NSDictionary *dict = [self.model.storeLocationsJSON objectAtIndex:i];
             CLLocation *loc = [[CLLocation alloc] initWithLatitude:[[dict objectForKey:@"latitude"] floatValue] longitude:[[dict objectForKey:@"longitude"] floatValue]];
-            NSLog(@"distance is %f", [loc distanceFromLocation:[locations objectAtIndex:0]]);
+            float dist = [loc distanceFromLocation:[locations objectAtIndex:0]];
+            if(shortest == 0){
+                shortest = dist;
+                val = dict;
+            }
+            else{
+                if(dist < shortest){
+                    shortest = dist;
+                    val = dict;
+                }
+            }
         }
+        
+        self.lblErrors.visible = NO;
+        self.lblReseller.visible = YES;
+        self.lblDistanceInKm.visible = YES;
+        self.lblDistance.visible = YES;
+        self.lblClosestReseller.visible = YES;
+        
+        [self.lblReseller setString:[val objectForKey:@"name"]];
+        [self.lblDistance setString:[NSString stringWithFormat:@"%.02f km", round(shortest/10)/100]];
     }
 }
 
@@ -130,7 +187,7 @@
     
     if([self.model.screenState isEqualToString:@"home"]){
         
-        if([self.button containsTouch:touch]){
+        if([self.button containsTouch:touch] && self.model.draggingSprite == nil){
             self.model.screenState = @"locator";
             [[SimpleAudioEngine sharedEngine] playEffect:@"click_2.caf" pitch:0.8f pan:0 gain:0.2f];
         }

@@ -10,7 +10,7 @@
         [self addChild:self.circle];
         self.scale = 0.0f;
         [self addIcon];
-        self.opacity = 0;
+        self.opacity = 0;        
     }
     return self;
 }

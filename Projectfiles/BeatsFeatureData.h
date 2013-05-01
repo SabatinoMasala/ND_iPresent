@@ -9,5 +9,6 @@
 @property (strong, nonatomic) NSString *image;
 @property (strong, nonatomic) NSString *description;
 @property (nonatomic) CGPoint position;
+@property (nonatomic) BOOL interactive;
 
 @end
