@@ -60,6 +60,7 @@
 -(void)bluetoothDisconnected:(id)sender {
     [self hideInstruments];
     self.pairButton.visible = YES;
+    self.pairButton.touchable = YES;
     self.instructions.string = self.descr;
     [self positionTitleAndLabel];
 }
@@ -112,6 +113,7 @@
 
 -(void)bluetoothPaired:(id)sender{
     self.pairButton.visible = NO;
+    self.pairButton.touchable = NO;
     self.instructions.string = @"touch any object below\n\n\n";
     
     self.title.position = CGPointMake(self.director.screenCenter.x, self.director.screenCenter.y+140);

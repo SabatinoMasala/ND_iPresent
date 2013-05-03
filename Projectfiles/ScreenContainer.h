@@ -13,6 +13,7 @@
 
 @property (strong, nonatomic) AppModel *model;
 
+@property (nonatomic) BOOL pickerOpen;
 @property (strong, nonatomic) GKSession *remoteSession;
 @property (strong, nonatomic) GKPeerPickerController *picker;
 @property (strong, nonatomic) NSMutableArray *peers;

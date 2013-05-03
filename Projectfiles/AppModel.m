@@ -29,9 +29,11 @@ static AppModel *instance;
 }
 
 -(void)bluetoothDisconnected{
-    _bluetoothConnection = NO;
-    _isConnectedBluetooth = NO;
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"BLUETOOTH_DISCONNECT" object:self];
+    if(_bluetoothConnection || _isConnectedBluetooth){
+        _bluetoothConnection = NO;
+        _isConnectedBluetooth = NO;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"BLUETOOTH_DISCONNECT" object:self];
+    }
 }
 
 -(void)resetBluetooth{

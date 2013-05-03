@@ -42,6 +42,8 @@
 
 -(void)disconnectBluetooth:(id)sender{
     
+    if(self.pickerOpen) return;
+    
     NSString *word;
     NSString *device = [[UIDevice currentDevice] model];
     if([device rangeOfString:@"iPad"].location == NSNotFound){
@@ -62,6 +64,7 @@
     [self.remoteSession disconnectFromAllPeers];
     self.remoteSession = nil;
     self.picker = nil;
+    self.pickerOpen = NO;
     self.peers = nil;
 }
 
@@ -97,6 +100,7 @@
     }
     else{
         self.picker = nil;
+        self.pickerOpen = NO;
     }
 }
 
@@ -105,6 +109,7 @@
     self.picker.delegate = self;
     self.picker.connectionTypesMask = GKPeerPickerConnectionTypeNearby;
     [self.picker show];
+    self.pickerOpen = YES;
 }
 
 -(void)peerPickerController:(GKPeerPickerController *)picker didConnectPeer:(NSString *)peerID toSession:(GKSession *)session{
@@ -112,6 +117,7 @@
     session.delegate = self;
     self.model.isConnectedBluetooth = YES;
     [self.picker dismiss];
+    self.pickerOpen = NO;
     self.picker.delegate = nil;
 }
 
