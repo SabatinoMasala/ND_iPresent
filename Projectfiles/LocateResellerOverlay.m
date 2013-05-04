@@ -109,7 +109,7 @@
         else{
             
             if([CLLocationManager locationServicesEnabled]){
-                NSURL *url = [NSURL URLWithString:@"http://127.0.0.1/nd/iPresent/api/restapi.php/stores.json"];
+                NSURL *url = [NSURL URLWithString:@"http://student.howest.be/sabatino.masala/20122013/ND/iPresent/api/stores.json"];
                 NSURLRequest *req = [NSURLRequest requestWithURL:url];
                 AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:req success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
                     if([self.model.screenState isEqualToString:@"locator"]){
@@ -169,7 +169,7 @@
         NSDictionary *dict = [JSON objectAtIndex:i];
         annotation.coordinate = CLLocationCoordinate2DMake([[dict objectForKey:@"latitude"] floatValue], [[dict objectForKey:@"longitude"] floatValue]);
         annotation.title = [dict objectForKey:@"name"];
-        annotation.subtitle = [dict objectForKey:@"name"];
+        annotation.subtitle = [dict objectForKey:@"address"];
         [self.map addAnnotation:annotation];
     }
     

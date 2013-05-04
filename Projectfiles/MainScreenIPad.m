@@ -22,7 +22,6 @@
         [self addNotificationObservers];
         self.touchEnabled = YES;
         
-        
         // Background
         CCSprite *bg = [CCSprite spriteWithFile:@"bg.png"];
         bg.position = self.director.screenCenter;
